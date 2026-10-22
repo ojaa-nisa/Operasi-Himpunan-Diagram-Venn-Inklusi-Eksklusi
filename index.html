@@ -18,7 +18,7 @@
     }
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
+  body{font-family:"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
   header{position:relative;overflow:hidden;background:linear-gradient(135deg,#1b1464,#4a2fb5 52%,#0f8a9d);color:#fff;padding:56px 20px 78px;text-align:center}
   header>*:not(.orbs){position:relative}
   .orbs span{position:absolute;width:260px;height:260px;border-radius:50%;mix-blend-mode:screen;opacity:.5}
@@ -83,7 +83,6 @@
 
 <div class="wrap">
 
-  <!-- 1. DATASET -->
   <section class="card">
     <h2>1. Dataset</h2>
     <p class="sub">Pilih dataset contoh atau ubah isinya sendiri. Pisahkan elemen dengan koma, titik koma, atau baris baru. Duplikat dan perbedaan huruf besar/kecil diabaikan.</p>
@@ -97,7 +96,6 @@
     <p class="hint" id="legend"></p>
   </section>
 
-  <!-- 2. VENN -->
   <section class="card">
     <h2>2. Diagram Venn Otomatis</h2>
     <p class="sub">Diagram dibuat otomatis dari dataset. Angka menunjukkan jumlah elemen di tiap wilayah; klik angka atau baris tabel untuk menyorot wilayah.</p>
@@ -107,7 +105,6 @@
     </div>
   </section>
 
-  <!-- 3. OPERASI -->
   <section class="card">
     <h2>3. Operasi Himpunan</h2>
     <p class="sub">Semesta (U) adalah gabungan seluruh himpunan. Komplemen dihitung terhadap U.</p>
@@ -133,7 +130,6 @@
     <div class="scroll"><table id="ops"></table></div>
   </section>
 
-  <!-- 4. INKLUSI-EKSKLUSI -->
   <section class="card">
     <h2>4. Prinsip Inklusi-Eksklusi</h2>
     <p class="sub">Banyak elemen gabungan dihitung dengan menjumlahkan irisan ganjil dan mengurangi irisan genap, lalu dibandingkan dengan hitungan langsung.</p>
@@ -143,7 +139,6 @@
     <p style="margin-top:12px" id="ieVerdict"></p>
   </section>
 
-  <!-- 5. PENGUJIAN -->
   <section class="card">
     <h2>5. Pengujian Aplikasi</h2>
     <p class="sub">Aplikasi diuji otomatis pada seluruh dataset contoh (minimal dua) dan data yang sedang tampil, dengan sifat-sifat himpunan yang harus selalu benar.</p>
@@ -155,34 +150,57 @@
 <footer>Dibuat dengan HTML, CSS, dan JavaScript murni. Tidak membutuhkan internet.</footer>
 
 <script>
-/* ============ DATA ============ */
 const COLORS = ["#1fa58f", "#e8902a", "#8a5ae0"];
 const LET = ["A", "B", "C"];
-const range = (a, b, step) => { const r = []; for (let x = a; x <= b; x += step) r.push(x); return r.join(", "); };
+const range = (a, b, step) => {
+  const r = [];
+  for (let x = a; x <= b; x += step) r.push(x);
+  return r.join(", ");
+};
 
 const PRESETS = {
-  ekskul: { label: "Dataset 1: Ekstrakurikuler siswa (3 himpunan)", sets: [
-    { name: "Pramuka", items: "Andi, Budi, Citra, Dewi, Eko, Fajar, Gita, Hana" },
-    { name: "Basket", items: "Budi, Eko, Indra, Joko, Kiki, Gita, Lina" },
-    { name: "Robotik", items: "Citra, Eko, Gita, Mira, Nando, Oscar, Dewi" } ] },
-  tech: { label: "Dataset 2: Teknologi proyek perangkat lunak (3 himpunan)", sets: [
-    { name: "Frontend", items: "HTML, CSS, JavaScript, React, Tailwind, TypeScript, Git" },
-    { name: "Backend", items: "Node.js, Python, SQL, JavaScript, TypeScript, Docker, Redis, Git" },
-    { name: "DevOps", items: "Docker, Linux, Git, CI/CD, Redis, Python, Kubernetes" } ] },
-  os: { label: "Dataset 3: Pengguna aplikasi Android dan iOS (2 himpunan)", sets: [
-    { name: "Pengguna Android", items: "U01, U02, U03, U04, U05, U06, U07, U08, U09, U10" },
-    { name: "Pengguna iOS", items: "U08, U09, U10, U11, U12, U13, U14" } ] },
-  angka: { label: "Dataset 4: Bilangan 1 sampai 30 (3 himpunan)", sets: [
-    { name: "Kelipatan 2", items: range(2, 30, 2) },
-    { name: "Kelipatan 3", items: range(3, 30, 3) },
-    { name: "Kelipatan 5", items: range(5, 30, 5) } ] }
+  ekskul: {
+    label: "Dataset 1: Ekstrakurikuler siswa (3 himpunan)",
+    sets: [
+      { name: "Pramuka", items: "Andi, Budi, Citra, Dewi, Eko, Fajar, Gita, Hana" },
+      { name: "Basket", items: "Budi, Eko, Indra, Joko, Kiki, Gita, Lina" },
+      { name: "Robotik", items: "Citra, Eko, Gita, Mira, Nando, Oscar, Dewi" }
+    ]
+  },
+  tech: {
+    label: "Dataset 2: Teknologi proyek perangkat lunak (3 himpunan)",
+    sets: [
+      { name: "Frontend", items: "HTML, CSS, JavaScript, React, Tailwind, TypeScript, Git" },
+      { name: "Backend", items: "Node.js, Python, SQL, JavaScript, TypeScript, Docker, Redis, Git" },
+      { name: "DevOps", items: "Docker, Linux, Git, CI/CD, Redis, Python, Kubernetes" }
+    ]
+  },
+  os: {
+    label: "Dataset 3: Pengguna aplikasi Android dan iOS (2 himpunan)",
+    sets: [
+      { name: "Pengguna Android", items: "U01, U02, U03, U04, U05, U06, U07, U08, U09, U10" },
+      { name: "Pengguna iOS", items: "U08, U09, U10, U11, U12, U13, U14" }
+    ]
+  },
+  angka: {
+    label: "Dataset 4: Bilangan 1 sampai 30 (3 himpunan)",
+    sets: [
+      { name: "Kelipatan 2", items: range(2, 30, 2) },
+      { name: "Kelipatan 3", items: range(3, 30, 3) },
+      { name: "Kelipatan 5", items: range(5, 30, 5) }
+    ]
+  }
 };
 
 let state = { sets: [], selected: null };
 const $ = id => document.getElementById(id);
-const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const esc = s => String(s).replace(/[&<>\"]/g, c => ({
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;"
+}[c]));
 
-/* ============ OPERASI HIMPUNAN (pada Set kunci) ============ */
 const un = (a, b) => new Set([...a, ...b]);
 const inter = (a, b) => new Set([...a].filter(x => b.has(x)));
 const diff = (a, b) => new Set([...a].filter(x => !b.has(x)));
@@ -191,47 +209,70 @@ const eq = (a, b) => a.size === b.size && [...a].every(x => b.has(x));
 
 function parse(text) {
   const m = new Map();
-  text.split(/[\n,;]+/).forEach(t => {
-    const v = t.trim(); if (!v) return;
-    const k = v.toLowerCase(); if (!m.has(k)) m.set(k, v);
+  text.split(/[\n,;]+/).forEach(part => {
+    const v = part.trim();
+    if (!v) return;
+    const k = v.toLowerCase();
+    if (!m.has(k)) m.set(k, v);
   });
   return m;
 }
+
 function compute(sets) {
-  const maps = sets.map(s => parse(s.items));
+  const maps = sets.map(s => parse(s.items || ""));
   const disp = new Map();
-  maps.forEach(m => m.forEach((v, k) => { if (!disp.has(k)) disp.set(k, v); }));
-  return { n: sets.length, names: sets.map(s => s.name), k: maps.map(m => new Set(m.keys())), disp, U: new Set(disp.keys()) };
+  maps.forEach(m => m.forEach((v, k) => {
+    if (!disp.has(k)) disp.set(k, v);
+  }));
+  return {
+    n: sets.length,
+    names: sets.map(s => s.name),
+    k: maps.map(m => new Set(m.keys())),
+    disp,
+    U: new Set(disp.keys())
+  };
 }
-const bitsOf = (mask, n) => { const r = []; for (let i = 0; i < n; i++) if (mask & (1 << i)) r.push(i); return r; };
-const pop = x => bitsOf(x, 8).length;
-const fmt = (S, m) => {
-  if (!S.size) return "∅";
-  return "{ " + [...S].map(k => m.disp.get(k)).sort((a, b) => a.localeCompare(b, "id", { numeric: true })).join(", ") + " }";
+
+const bitsOf = (mask, n) => {
+  const r = [];
+  for (let i = 0; i < n; i++) if (mask & (1 << i)) r.push(i);
+  return r;
 };
 
-/* Wilayah Venn: setiap elemen dikelompokkan berdasarkan himpunan yang memuatnya */
+const pop = x => bitsOf(x, 8).length;
+
+const fmt = (S, m) => {
+  if (!S.size) return "∅";
+  return "{ " + [...S]
+    .map(k => m.disp.get(k))
+    .sort((a, b) => a.localeCompare(b, "id", { numeric: true }))
+    .join(", ") + " }";
+};
+
 function regions(m) {
   const map = new Map();
   for (let mask = 1; mask < (1 << m.n); mask++) map.set(mask, []);
   m.U.forEach(key => {
     let mask = 0;
-    m.k.forEach((s, i) => { if (s.has(key)) mask |= (1 << i); });
-    map.get(mask).push(key);
+    m.k.forEach((set, i) => {
+      if (set.has(key)) mask |= (1 << i);
+    });
+    if (map.has(mask)) map.get(mask).push(key);
   });
   return [...map].map(([mask, keys]) => ({ mask, keys }));
 }
+
 function regionLabel(mask, n) {
   const l = bitsOf(mask, n).map(i => LET[i]);
   if (l.length === 1) return l[0] + " saja";
   return l.join("∩") + (l.length === n ? "" : " saja");
 }
 
-/* Prinsip Inklusi-Eksklusi */
 function ie(m) {
   const masks = [];
   for (let x = 1; x < (1 << m.n); x++) masks.push(x);
   masks.sort((a, b) => pop(a) - pop(b) || a - b);
+
   let running = 0;
   const terms = masks.map(mask => {
     const idx = bitsOf(mask, m.n);
@@ -241,34 +282,46 @@ function ie(m) {
     running += sign * S.size;
     return { label: idx.map(i => LET[i]).join("∩"), size: S.size, sign, running };
   });
-  let direct = new Set(); m.k.forEach(s => { direct = un(direct, s); });
+
+  let direct = new Set();
+  m.k.forEach(s => { direct = un(direct, s); });
   return { terms, total: running, direct: direct.size };
 }
 
-/* ============ INPUT ============ */
 function buildInputs() {
-  const box = $("inputs"); box.innerHTML = "";
+  const box = $("inputs");
+  box.innerHTML = "";
   state.sets.forEach((s, i) => {
     const d = document.createElement("div");
-    d.className = "set-card"; d.style.borderTopColor = COLORS[i];
+    d.className = "set-card";
+    d.style.borderTopColor = COLORS[i];
     d.innerHTML = `<label>Himpunan ${LET[i]} (nama)<input class="nm" value="${esc(s.name)}"></label>
       <label>Elemen<textarea>${esc(s.items)}</textarea></label><div class="cnt"></div>`;
-    d.querySelector("input").addEventListener("input", e => { state.sets[i].name = e.target.value; update(); });
-    d.querySelector("textarea").addEventListener("input", e => { state.sets[i].items = e.target.value; update(); });
+    d.querySelector("input").addEventListener("input", e => {
+      state.sets[i].name = e.target.value;
+      update();
+    });
+    d.querySelector("textarea").addEventListener("input", e => {
+      state.sets[i].items = e.target.value;
+      update();
+    });
     box.appendChild(d);
   });
   $("toggleC").textContent = state.sets.length === 2 ? "Tambah himpunan C" : "Hapus himpunan C";
 }
+
 function loadPreset(key) {
   state.sets = JSON.parse(JSON.stringify(PRESETS[key].sets));
   state.selected = null;
-  buildInputs(); update();
+  buildInputs();
+  update();
 }
 
-/* ============ DIAGRAM VENN ============ */
 function renderVenn(m, regs) {
   const n = m.n;
-  const cnt = {}; regs.forEach(r => cnt[r.mask] = r.keys.length);
+  const cnt = {};
+  regs.forEach(r => cnt[r.mask] = r.keys.length);
+
   let circles, pos, labels, vb;
   if (n === 2) {
     vb = "0 0 520 380";
@@ -281,6 +334,7 @@ function renderVenn(m, regs) {
     pos = { 1: [138, 128], 2: [382, 128], 4: [260, 352], 3: [260, 108], 5: [195, 255], 6: [325, 255], 7: [260, 200] };
     labels = [[100, 48], [420, 48], [260, 425]];
   }
+
   let s = `<svg viewBox="${vb}" role="img" aria-label="Diagram Venn">`;
   circles.forEach((c, i) => {
     s += `<circle cx="${c[0]}" cy="${c[1]}" r="${c[2]}" fill="${COLORS[i]}" fill-opacity=".32" stroke="${COLORS[i]}" stroke-width="3"/>`;
@@ -288,44 +342,77 @@ function renderVenn(m, regs) {
   labels.forEach((p, i) => {
     s += `<text x="${p[0]}" y="${p[1]}" text-anchor="middle" font-size="15" font-weight="700" fill="${COLORS[i]}">${LET[i]}: ${esc(m.names[i] || "")} (${m.k[i].size})</text>`;
   });
+
   Object.keys(pos).forEach(mask => {
     const [x, y] = pos[mask];
     const sel = state.selected === +mask;
     s += `<g data-mask="${mask}" style="cursor:pointer">
       <circle cx="${x}" cy="${y - 7}" r="22" fill="${sel ? "currentColor" : "transparent"}" fill-opacity=".12" stroke="${sel ? "currentColor" : "none"}" stroke-dasharray="4 3"/>
-      <text class="rcount" x="${x}" y="${y}" text-anchor="middle"><title>${regionLabel(+mask, n)}</title>${cnt[mask] || 0}</text></g>`;
+      <text class="rcount" x="${x}" y="${y}" text-anchor="middle"><title>${regionLabel(+mask, n)}</title>${cnt[mask] || 0}</text>
+    </g>`;
   });
+
   s += `<text x="10" y="${n === 2 ? 370 : 425}" font-size="13" fill="currentColor" opacity=".7">U = ${m.U.size} elemen</text></svg>`;
   $("venn").innerHTML = s;
-  $("venn").querySelectorAll("g[data-mask]").forEach(g => g.addEventListener("click", () => selectRegion(+g.dataset.mask)));
+  $("venn").querySelectorAll("g[data-mask]").forEach(g => 
+    g.addEventListener("click", () => selectRegion(+g.dataset.mask))
+  );
 }
+
 function renderRegions(m, regs) {
   let h = `<tr><th>Wilayah</th><th class="num">Jumlah</th><th>Elemen</th></tr>`;
   regs.forEach(r => {
-    h += `<tr class="click ${state.selected === r.mask ? "sel" : ""}" data-mask="${r.mask}"><td>${regionLabel(r.mask, m.n)}</td><td class="num">${r.keys.length}</td><td>${esc(fmt(new Set(r.keys), m))}</td></tr>`;
+    h += `<tr class="click ${state.selected === r.mask ? "sel" : ""}" data-mask="${r.mask}">
+      <td>${regionLabel(r.mask, m.n)}</td>
+      <td class="num">${r.keys.length}</td>
+      <td>${esc(fmt(new Set(r.keys), m))}</td>
+    </tr>`;
   });
   $("regions").innerHTML = h;
-  $("regions").querySelectorAll("tr.click").forEach(tr => tr.addEventListener("click", () => selectRegion(+tr.dataset.mask)));
+  $("regions").querySelectorAll("tr.click").forEach(tr =>
+    tr.addEventListener("click", () => selectRegion(+tr.dataset.mask))
+  );
 }
-function selectRegion(mask) { state.selected = state.selected === mask ? null : mask; update(); }
 
-/* ============ OPERASI ============ */
+function selectRegion(mask) {
+  state.selected = state.selected === mask ? null : mask;
+  update();
+}
+
 function opRows(m) {
   const U = m.U, k = m.k, rows = [];
   k.forEach((s, i) => rows.push([`${LET[i]}′`, diff(U, s)]));
-  for (let i = 0; i < m.n; i++) for (let j = i + 1; j < m.n; j++) {
-    const a = LET[i], b = LET[j];
-    rows.push([`${a} ∪ ${b}`, un(k[i], k[j])], [`${a} ∩ ${b}`, inter(k[i], k[j])],
-      [`${a} − ${b}`, diff(k[i], k[j])], [`${b} − ${a}`, diff(k[j], k[i])], [`${a} △ ${b}`, sym(k[i], k[j])]);
+
+  for (let i = 0; i < m.n; i++) {
+    for (let j = i + 1; j < m.n; j++) {
+      const a = LET[i], b = LET[j];
+      rows.push(
+        [`${a} ∪ ${b}`, un(k[i], k[j])],
+        [`${a} ∩ ${b}`, inter(k[i], k[j])],
+        [`${a} − ${b}`, diff(k[i], k[j])],
+        [`${b} − ${a}`, diff(k[j], k[i])],
+        [`${a} △ ${b}`, sym(k[i], k[j])]
+      );
+    }
   }
+
   if (m.n === 3) {
     const [A, B, C] = k;
-    rows.push(["A ∪ B ∪ C", un(un(A, B), C)], ["A ∩ B ∩ C", inter(inter(A, B), C)],
-      ["(A ∩ B) − C", diff(inter(A, B), C)], ["(A ∩ C) − B", diff(inter(A, C), B)], ["(B ∩ C) − A", diff(inter(B, C), A)],
-      ["A − (B ∪ C)", diff(A, un(B, C))], ["B − (A ∪ C)", diff(B, un(A, C))], ["C − (A ∪ B)", diff(C, un(A, B))]);
+    rows.push(
+      ["A ∪ B ∪ C", un(un(A, B), C)],
+      ["A ∩ B ∩ C", inter(inter(A, B), C)],
+      ["(A ∩ B) − C", diff(inter(A, B), C)],
+      ["(A ∩ C) − B", diff(inter(A, C), B)],
+      ["(B ∩ C) − A", diff(inter(B, C), A)],
+      ["A − (B ∪ C)", diff(A, un(B, C))],
+      ["B − (A ∪ C)", diff(B, un(A, C))],
+      ["C − (A ∪ B)", diff(C, un(A, B))]
+    );
   }
+
   return rows;
 }
+
 function describe(e) {
   let r;
   if ((r = e.match(/^([ABC])′$/))) return `Semua elemen semesta U yang bukan anggota ${r[1]}.`;
@@ -333,6 +420,7 @@ function describe(e) {
   if ((r = e.match(/^([ABC]) ∩ ([ABC])$/))) return `Elemen yang ada di ${r[1]} dan sekaligus di ${r[2]}.`;
   if ((r = e.match(/^([ABC]) − ([ABC])$/))) return `Elemen yang ada di ${r[1]} tetapi tidak ada di ${r[2]}.`;
   if ((r = e.match(/^([ABC]) △ ([ABC])$/))) return `Elemen yang hanya ada di salah satu dari ${r[1]} atau ${r[2]}, bukan keduanya.`;
+
   const fixed = {
     "A ∪ B ∪ C": "Elemen yang ada di paling sedikit satu dari A, B, atau C.",
     "A ∩ B ∩ C": "Elemen yang ada di ketiga himpunan sekaligus.",
@@ -345,23 +433,30 @@ function describe(e) {
   };
   return fixed[e] || "";
 }
+
 function renderOps(m) {
   let h = `<tr><th>Ekspresi</th><th>Keterangan</th><th class="num">|hasil|</th><th>Hasil</th></tr>`;
-  opRows(m).forEach(([e, S]) => { h += `<tr><td class="mono">${e}</td><td>${describe(e)}</td><td class="num">${S.size}</td><td>${esc(fmt(S, m))}</td></tr>`; });
+  opRows(m).forEach(([e, S]) => {
+    h += `<tr><td class="mono">${e}</td><td>${describe(e)}</td><td class="num">${S.size}</td><td>${esc(fmt(S, m))}</td></tr>`;
+  });
   $("ops").innerHTML = h;
 }
+
 function operand(id, m) {
   return id[0] === "c" ? diff(m.U, m.k[+id.slice(1)]) : m.k[+id];
 }
+
 function renderCalc(m) {
   const opts = [];
   for (let i = 0; i < m.n; i++) opts.push([String(i), LET[i]]);
   for (let i = 0; i < m.n; i++) opts.push(["c" + i, LET[i] + "′"]);
+
   [["opX", 0], ["opY", 1]].forEach(([id, def]) => {
     const sel = $(id), old = sel.value;
     sel.innerHTML = opts.map(o => `<option value="${o[0]}">${o[1]}</option>`).join("");
     sel.value = opts.some(o => o[0] === old) ? old : String(def);
   });
+
   const X = operand($("opX").value, m), Y = operand($("opY").value, m);
   const op = $("opOp").value;
   const R = op === "u" ? un(X, Y) : op === "i" ? inter(X, Y) : op === "d" ? diff(X, Y) : sym(X, Y);
@@ -373,25 +468,29 @@ function renderCalc(m) {
     d: `Selisih: elemen yang ada di ${nx} tetapi tidak ada di ${ny}.`,
     s: `Beda setangkup: elemen yang hanya ada di salah satu dari ${nx} atau ${ny}, bukan keduanya.`
   }[op];
+
   $("calcRes").innerHTML = `<strong>${nx} ${sy} ${ny}</strong> → |hasil| = <strong>${R.size}</strong><br>${esc(fmt(R, m))}<br><em style="color:var(--muted)">${ket}</em>`;
 }
 
-/* ============ INKLUSI-EKSKLUSI ============ */
 function renderIE(m) {
   const r = ie(m);
   const all = LET.slice(0, m.n).join("∪");
   const sym_ = r.terms.map((t, i) => (i === 0 ? "" : (t.sign > 0 ? " + " : " − ")) + `|${t.label}|`).join("");
   $("ieSym").textContent = `|${all}| = ${sym_}`;
+
   const numStr = r.terms.map((t, i) => i === 0 ? `${t.size}` : `${t.sign > 0 ? "+" : "−"} ${t.size}`).join(" ");
   $("ieNum").textContent = `|${all}| = ${numStr} = ${r.total}`;
+
   let h = `<tr><th>Suku</th><th class="num">Ukuran</th><th>Tanda</th><th class="num">Total berjalan</th></tr>`;
-  r.terms.forEach(t => { h += `<tr><td class="mono">|${t.label}|</td><td class="num">${t.size}</td><td>${t.sign > 0 ? "+" : "−"}</td><td class="num">${t.running}</td></tr>`; });
+  r.terms.forEach(t => {
+    h += `<tr><td class="mono">|${t.label}|</td><td class="num">${t.size}</td><td>${t.sign > 0 ? "+" : "−"}</td><td class="num">${t.running}</td></tr>`;
+  });
   $("ieTable").innerHTML = h;
+
   const ok = r.total === r.direct;
   $("ieVerdict").innerHTML = `Hasil rumus = <strong>${r.total}</strong>, hitungan langsung |${all}| = <strong>${r.direct}</strong> <span class="badge ${ok ? "ok" : "bad"}">${ok ? "Cocok ✓" : "Tidak cocok ✗"}</span>`;
 }
 
-/* ============ PENGUJIAN ============ */
 const TEST_NAMES = [
   "Inklusi-Eksklusi = |∪| langsung",
   "Σ wilayah Venn = |U|",
@@ -401,10 +500,12 @@ const TEST_NAMES = [
   "De Morgan: (A∩B)′ = A′∪B′",
   "Distributif: A∩(B∪C) = (A∩B)∪(A∩C)"
 ];
+
 function runChecks(sets) {
   const m = compute(sets), U = m.U, [A, B, C] = m.k;
   const comp = S => diff(U, S);
   const r = ie(m);
+
   const res = [
     r.total === r.direct,
     regions(m).reduce((s, x) => s + x.keys.length, 0) === U.size,
@@ -414,39 +515,57 @@ function runChecks(sets) {
     eq(comp(inter(A, B)), un(comp(A), comp(B))),
     m.n >= 3 ? eq(inter(A, un(B, C)), un(inter(A, B), inter(A, C))) : null
   ];
+
   return res;
 }
+
 function renderTests() {
   const rows = Object.values(PRESETS).map(p => [p.label, p.sets]);
   rows.push(["Data yang sedang tampil", state.sets]);
+
   let h = `<tr><th>Dataset</th>${TEST_NAMES.map(t => `<th>${t}</th>`).join("")}</tr>`;
   let pass = 0, total = 0;
+
   rows.forEach(([label, sets]) => {
     const res = runChecks(sets);
     h += `<tr><td>${esc(label)}</td>` + res.map(v => {
       if (v === null) return `<td>—</td>`;
-      total++; if (v) pass++;
+      total++;
+      if (v) pass++;
       return `<td><span class="badge ${v ? "ok" : "bad"}">${v ? "Lulus" : "Gagal"}</span></td>`;
     }).join("") + `</tr>`;
   });
+
   $("tests").innerHTML = h;
   $("testSummary").innerHTML = `<span class="badge ${pass === total ? "ok" : "bad"}">${pass} dari ${total} pengujian lulus</span> pada ${rows.length} dataset`;
 }
 
-/* ============ UPDATE ============ */
 function update() {
   const m = compute(state.sets), regs = regions(m);
-  document.querySelectorAll(".set-card .cnt").forEach((el, i) => { el.textContent = `|${LET[i]}| = ${m.k[i].size} elemen`; });
-  $("legend").innerHTML = LET.slice(0, m.n).map((l, i) => `<strong style="color:${COLORS[i]}">${l}</strong> = ${esc(m.names[i])}`).join(" &nbsp;·&nbsp; ") + ` &nbsp;·&nbsp; U = gabungan semua (${m.U.size} elemen)`;
-  renderVenn(m, regs); renderRegions(m, regs); renderOps(m); renderCalc(m); renderIE(m); renderTests();
+  document.querySelectorAll(".set-card .cnt").forEach((el, i) => {
+    el.textContent = `|${LET[i]}| = ${m.k[i].size} elemen`;
+  });
+
+  $("legend").innerHTML = LET.slice(0, m.n)
+    .map((l, i) => `<strong style="color:${COLORS[i]}">${l}</strong> = ${esc(m.names[i])}`)
+    .join(" &nbsp;·&nbsp; ") + ` &nbsp;·&nbsp; U = gabungan semua (${m.U.size} elemen)`;
+
+  renderVenn(m, regs);
+  renderRegions(m, regs);
+  renderOps(m);
+  renderCalc(m);
+  renderIE(m);
+  renderTests();
 }
 
-/* ============ INIT ============ */
 $("preset").innerHTML = Object.entries(PRESETS).map(([k, p]) => `<option value="${k}">${p.label}</option>`).join("");
 $("preset").addEventListener("change", e => loadPreset(e.target.value));
 $("toggleC").addEventListener("click", () => {
-  if (state.sets.length === 2) state.sets.push({ name: "Himpunan C", items: "" }); else state.sets.pop();
-  state.selected = null; buildInputs(); update();
+  if (state.sets.length === 2) state.sets.push({ name: "Himpunan C", items: "" });
+  else if (state.sets.length === 3) state.sets.pop();
+  state.selected = null;
+  buildInputs();
+  update();
 });
 ["opX", "opOp", "opY"].forEach(id => $(id).addEventListener("change", () => renderCalc(compute(state.sets))));
 $("runTests").addEventListener("click", renderTests);
